@@ -76,7 +76,7 @@ export default function FileList({
   // Fetch files when userId, refreshTrigger, or currentFolder changes
   useEffect(() => {
     fetchFiles();
-  }, [userId, refreshTrigger, currentFolder]);
+  }, [userId, refreshTrigger, currentFolder,fetchFiles]);
 
   // Filter files based on active tab
   const filteredFiles = useMemo(() => {
@@ -226,12 +226,6 @@ export default function FileList({
   // Add this function to handle file downloads
   const handleDownloadFile = async (file: FileType) => {
     try {
-      // Show loading toast
-      const loadingToastId = addToast({
-        title: "Preparing Download",
-        description: `Getting "${file.name}" ready for download...`,
-        color: "primary",
-      });
 
       // For images, we can use the ImageKit URL directly with optimized settings
       if (file.type.startsWith("image/")) {
