@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Folder, Star, Trash, X, ExternalLink } from "lucide-react";
 import {
   Table,
@@ -51,7 +51,7 @@ export default function FileList({
   const [selectedFile, setSelectedFile] = useState<FileType | null>(null);
 
   // Fetch files
-  const fetchFiles = async () => {
+  const fetchFiles = useCallback(async () => {
     setLoading(true);
     try {
       let url = `/api/files?userId=${userId}`;
@@ -71,7 +71,7 @@ export default function FileList({
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
   // Fetch files when userId, refreshTrigger, or currentFolder changes
   useEffect(() => {
