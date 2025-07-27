@@ -95,12 +95,21 @@ export default function SignUpForm() {
           "Verification could not be completed. Please try again."
         );
       }
-    } catch (error: any) {
-      console.error("Verification error:", error);
-      setVerificationError(
-        error.errors?.[0]?.message ||
-          "An error occurred during verification. Please try again."
-      );
+    } catch (error: unknown) {
+        console.error("Verification error:", error);
+
+  let errorMessage = "An error occurred during verification. Please try again.";
+
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "errors" in error &&
+    Array.isArray((error as any).errors)
+  ) {
+    errorMessage = (error as any).errors?.[0]?.message || errorMessage;
+  }
+
+  setVerificationError(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
@@ -114,7 +123,7 @@ export default function SignUpForm() {
             Verify Your Email
           </h1>
           <p className="text-default-500 text-center">
-            We've sent a verification code to your email
+            We have sent a verification code to your email
           </p>
         </CardHeader>
 
@@ -159,7 +168,7 @@ export default function SignUpForm() {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-default-500">
-              Didn't receive a code?{" "}
+              Did not receive a code?{" "}
               <button
                 onClick={async () => {
                   if (signUp) {
