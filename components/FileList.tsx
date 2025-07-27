@@ -71,7 +71,7 @@ export default function FileList({
     } finally {
       setLoading(false);
     }
-  },[]);
+  },[currentFolder, userId]);
 
   // Fetch files when userId, refreshTrigger, or currentFolder changes
   useEffect(() => {
