@@ -42,8 +42,8 @@ export async function POST(request: NextRequest) {
         .from(files)
         .where(
           and(
-            eq(files.id, parentId),
-            eq(files.userId, userId),
+            eq(files.id, parentId),//Parent id should exists in meta data database
+            eq(files.userId, userId),//UserId should match
             eq(files.isFolder, true)
           )
         );
@@ -57,9 +57,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Only allow image uploads
-    if (!file.type.startsWith("image/") && file.type !== "application/pdf") {
+    if (!file.type.startsWith("image/") && file.type !== "application/pdf" && file.type !== "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
       return NextResponse.json(
-        { error: "Only image files are supported" },
+        { error: "Only image and files are supported" },
         { status: 400 }
       );
     }
