@@ -144,12 +144,12 @@ export default function Navbar({ user }: NavbarProps) {
             {/* Show these buttons when user is signed out */}
             <SignedOut>
               <Link href="/sign-in">
-                <Button variant="flat" color="primary" rounded-full transition-all duration-200 shadow-sm hover:shadow-md>
+                <Button variant="flat" color="primary" className="rounded-full transition-all duration-200 shadow-sm hover:shadow-md">
                   Sign In
                 </Button>
               </Link>
               <Link href="/sign-up">
-                <Button variant="solid" color="primary" rounded-full transition-all duration-200 shadow-sm hover:shadow-md>
+                <Button variant="solid" color="primary" className="rounded-full transition-all duration-200 shadow-sm hover:shadow-md">
                   Sign Up
                 </Button>
               </Link>
@@ -160,7 +160,7 @@ export default function Navbar({ user }: NavbarProps) {
               <div className="flex items-center gap-4">
                 {!isOnDashboard && (
                   <Link href="/dashboard">
-                    <Button variant="flat" color="primary" rounded-full transition-all duration-200 shadow-sm hover:shadow-md>
+                    <Button variant="flat" color="primary" className="rounded-full transition-all duration-200 shadow-sm hover:shadow-md">
                       Dashboard
                     </Button>
                   </Link>
