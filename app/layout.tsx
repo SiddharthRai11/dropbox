@@ -5,10 +5,6 @@ import { Providers } from "./providers";
 import "../styles/globals.css";
 import { fontSans } from "@/config/font";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
 
 export const metadata: Metadata = {
   title: "Droply",
