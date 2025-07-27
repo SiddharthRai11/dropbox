@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Providers } from "./providers";
 import "../styles/globals.css";
+import { fontSans } from "@/config/font";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +24,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" className="dark">
         <body
-          className={`${inter.variable} antialiased bg-background text-foreground`}
+          className={`${fontSans.variable} antialiased bg-background text-foreground font-sans`}
         >
           <Providers>{children}</Providers>
         </body>

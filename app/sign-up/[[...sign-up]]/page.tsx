@@ -5,20 +5,20 @@ import Navbar from "@/components/Navbar";
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen flex flex-col bg-white">
       {/* Use the unified Navbar component */}
       <Navbar />
 
       <main className="flex-1 flex justify-center items-center p-6">
-        <SignUpForm />
+        <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-blue-600 mb-6">Sign Up</h1>
+          <SignUpForm />
+        </div>
       </main>
 
-      {/* Dark mode footer */}
-      <footer className="bg-gray-900 text-white py-4">
+      <footer className="bg-white border-t border-gray-100 py-4">
         <div className="container mx-auto px-6 text-center">
-          <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} Droply. All rights reserved.
-          </p>
+          <p className="text-gray-400 text-sm">&copy; {new Date().getFullYear()} Droply</p>
         </div>
       </footer>
     </div>

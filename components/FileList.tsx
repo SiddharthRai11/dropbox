@@ -413,8 +413,8 @@ export default function FileList({
         <FileEmptyState activeTab={activeTab} />
       ) : (
         <Card
-          shadow="sm"
-          className="border border-default-200 bg-default-50 overflow-hidden"
+          shadow="md"
+          className="border border-gray-200 bg-white overflow-hidden rounded-2xl shadow-lg"
         >
           <div className="overflow-x-auto">
             <Table
@@ -424,7 +424,7 @@ export default function FileList({
               selectionMode="none"
               classNames={{
                 base: "min-w-full",
-                th: "bg-default-100 text-default-800 font-medium text-sm",
+                th: "bg-gray-50 text-gray-800 font-semibold text-sm",
                 td: "py-4",
               }}
             >
@@ -441,7 +441,7 @@ export default function FileList({
                 {filteredFiles.map((file) => (
                   <TableRow
                     key={file.id}
-                    className={`hover:bg-default-100 transition-colors ${
+                    className={`hover:bg-blue-50 transition-colors duration-150 ${
                       file.isFolder || file.type.startsWith("image/")
                         ? "cursor-pointer"
                         : ""
@@ -453,7 +453,7 @@ export default function FileList({
                         <FileIcon file={file} />
                         <div>
                           <div className="font-medium flex items-center gap-2 text-default-800">
-                            <span className="truncate max-w-[150px] sm:max-w-[200px] md:max-w-[300px]">
+                            <span className="truncate max-w-[150px] sm:max-w-[200px] md:max-w-[300px] text-gray-900">
                               {file.name}
                             </span>
                             {file.isStarred && (
@@ -466,16 +466,17 @@ export default function FileList({
                             )}
                             {file.isFolder && (
                               <Tooltip content="Folder">
-                                <Folder className="h-3 w-3 text-default-400" />
+                                <Folder className="h-3 w-3 text-blue-400" />
                               </Tooltip>
                             )}
                             {file.type.startsWith("image/") && (
                               <Tooltip content="Click to view image">
-                                <ExternalLink className="h-3 w-3 text-default-400" />
+                                <ExternalLink className="h-3 w-3 text-blue-400" />
                               </Tooltip>
                             )}
                           </div>
                           <div className="text-xs text-default-500 sm:hidden">
+                            {/* Use gray for subtlety */}
                             {formatDistanceToNow(new Date(file.createdAt), {
                               addSuffix: true,
                             })}

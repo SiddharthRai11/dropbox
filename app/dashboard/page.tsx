@@ -25,10 +25,10 @@ export default async function Dashboard() {
     : null;
 
   return (
-    <div className="min-h-screen flex flex-col bg-default-50">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar user={serializedUser} />
 
-      <main className="flex-1 container mx-auto py-8 px-6">
+      <main className="flex-1 container mx-auto py-10 px-4 md:px-10 rounded-2xl shadow-lg bg-white mt-6 mb-8">
         <DashboardContent
           userId={userId}
           userName={
@@ -40,17 +40,13 @@ export default async function Dashboard() {
         />
       </main>
 
-      <footer className="bg-default-50 border-t border-default-200 py-6">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center gap-2 mb-4 md:mb-0">
-              <CloudUpload className="h-5 w-5 text-primary" />
-              <h2 className="text-lg font-bold">Droply</h2>
-            </div>
-            <p className="text-default-500 text-sm">
-              &copy; {new Date().getFullYear()} Droply
-            </p>
+      <footer className="bg-white border-t border-gray-100 py-4 mt-auto">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center gap-2 mb-2 md:mb-0">
+            <CloudUpload className="h-5 w-5 text-blue-600" />
+            <h2 className="text-lg font-bold text-gray-900">Droply</h2>
           </div>
+          <p className="text-gray-400 text-sm">&copy; {new Date().getFullYear()} Droply</p>
         </div>
       </footer>
     </div>

@@ -20,7 +20,7 @@ export default function FileActionButtons({
 }: FileActionButtonsProps) {
   return (
     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-0">
-      <h2 className="text-xl sm:text-2xl font-semibold truncate max-w-full">
+      <h2 className="text-2xl font-extrabold text-gray-900 truncate max-w-full">
         {activeTab === "all" &&
           (folderPath.length > 0
             ? folderPath[folderPath.length - 1].name
@@ -32,6 +32,7 @@ export default function FileActionButtons({
         <Button
           variant="flat"
           size="sm"
+          className="rounded-full text-blue-600 border-blue-100 shadow-sm hover:shadow-md transition-all duration-200"
           onClick={onRefresh}
           startContent={<RefreshCw className="h-4 w-4" />}
         >
@@ -42,6 +43,7 @@ export default function FileActionButtons({
             color="danger"
             variant="flat"
             size="sm"
+            className="rounded-full shadow-sm hover:shadow-md transition-all duration-200"
             onClick={onEmptyTrash}
             startContent={<Trash className="h-4 w-4" />}
           >

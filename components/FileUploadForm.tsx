@@ -188,7 +188,7 @@ export default function FileUploadForm({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Action buttons */}
       <div className="flex gap-2 mb-2">
         <Button
@@ -196,7 +196,7 @@ export default function FileUploadForm({
           variant="flat"
           startContent={<FolderPlus className="h-4 w-4" />}
           onClick={() => setFolderModalOpen(true)}
-          className="flex-1"
+          className="flex-1 rounded-full shadow-sm hover:shadow-md transition-all duration-200"
         >
           New Folder
         </Button>
@@ -205,7 +205,7 @@ export default function FileUploadForm({
           variant="flat"
           startContent={<FileUp className="h-4 w-4" />}
           onClick={() => fileInputRef.current?.click()}
-          className="flex-1"
+          className="flex-1 rounded-full shadow-sm hover:shadow-md transition-all duration-200"
         >
           Add Image
         </Button>
@@ -215,29 +215,29 @@ export default function FileUploadForm({
       <div
         onDrop={handleDrop}
         onDragOver={handleDragOver}
-        className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
+        className={`border-2 border-dashed rounded-2xl p-8 text-center shadow-md transition-colors duration-200 ${
           error
-            ? "border-danger/30 bg-danger/5"
+            ? "border-red-300 bg-red-50"
             : file
-              ? "border-primary/30 bg-primary/5"
-              : "border-default-300 hover:border-primary/5"
+              ? "border-blue-300 bg-blue-50"
+              : "border-gray-200 bg-white hover:border-blue-200"
         }`}
       >
         {!file ? (
           <div className="space-y-3">
-            <FileUp className="h-12 w-12 mx-auto text-primary/70" />
+            <FileUp className="h-14 w-14 mx-auto text-blue-400/80" />
             <div>
-              <p className="text-default-600">
+              <p className="text-gray-500">
                 Drag and drop your image here, or{" "}
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="text-primary cursor-pointer font-medium inline bg-transparent border-0 p-0 m-0"
+                  className="text-blue-600 cursor-pointer font-semibold inline bg-transparent border-0 p-0 m-0 hover:underline"
                 >
                   browse
                 </button>
               </p>
-              <p className="text-xs text-default-500 mt-1">Images up to 5MB</p>
+              <p className="text-xs text-gray-400 mt-1">Images up to 5MB</p>
             </div>
             <Input
               type="file"
@@ -251,14 +251,14 @@ export default function FileUploadForm({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="p-2 bg-primary/10 rounded-md">
-                  <FileUp className="h-5 w-5 text-primary" />
+                <div className="p-2 bg-blue-100 rounded-md">
+                  <FileUp className="h-5 w-5 text-blue-500" />
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-medium truncate max-w-[180px]">
                     {file.name}
                   </p>
-                  <p className="text-xs text-default-500">
+                  <p className="text-xs text-gray-400">
                     {file.size < 1024
                       ? `${file.size} B`
                       : file.size < 1024 * 1024
@@ -272,14 +272,14 @@ export default function FileUploadForm({
                 variant="light"
                 size="sm"
                 onClick={clearFile}
-                className="text-default-500"
+                className="text-gray-400 hover:text-red-500 transition-colors"
               >
                 <X className="h-4 w-4" />
               </Button>
             </div>
 
             {error && (
-              <div className="bg-danger-5 text-danger-700 p-3 rounded-lg flex items-center gap-2">
+              <div className="bg-red-50 text-red-700 p-3 rounded-lg flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4" />
                 <span className="text-sm">{error}</span>
               </div>
@@ -301,7 +301,7 @@ export default function FileUploadForm({
               endContent={!uploading && <ArrowRight className="h-4 w-4" />}
               onClick={handleUpload}
               isLoading={uploading}
-              className="w-full"
+              className="w-full rounded-full shadow-md hover:shadow-lg transition-all duration-200"
               isDisabled={!!error}
             >
               {uploading ? `Uploading... ${progress}%` : "Upload Image"}
@@ -311,9 +311,9 @@ export default function FileUploadForm({
       </div>
 
       {/* Upload tips */}
-      <div className="bg-default-100/5 p-4 rounded-lg">
-        <h4 className="text-sm font-medium mb-2">Tips</h4>
-        <ul className="text-xs text-default-600 space-y-1">
+      <div className="bg-blue-50/50 p-4 rounded-xl">
+        <h4 className="text-sm font-semibold text-blue-600 mb-2">Tips</h4>
+        <ul className="text-xs text-gray-500 space-y-1">
           <li>• Images are private and only visible to you</li>
           <li>• Supported formats: JPG, PNG, GIF, WebP</li>
           <li>• Maximum file size: 5MB</li>
@@ -326,19 +326,19 @@ export default function FileUploadForm({
         onOpenChange={setFolderModalOpen}
         backdrop="blur"
         classNames={{
-          base: "border border-default-200 bg-default-5",
-          header: "border-b border-default-200",
-          footer: "border-t border-default-200",
+          base: "border border-gray-200 bg-white rounded-2xl shadow-xl",
+          header: "border-b border-gray-100",
+          footer: "border-t border-gray-100",
         }}
       >
         <ModalContent>
           <ModalHeader className="flex gap-2 items-center">
-            <FolderPlus className="h-5 w-5 text-primary" />
+            <FolderPlus className="h-5 w-5 text-blue-600" />
             <span>New Folder</span>
           </ModalHeader>
           <ModalBody>
             <div className="space-y-4">
-              <p className="text-sm text-default-600">
+              <p className="text-sm text-gray-500">
                 Enter a name for your folder:
               </p>
               <Input
@@ -365,6 +365,7 @@ export default function FileUploadForm({
               isLoading={creatingFolder}
               isDisabled={!folderName.trim()}
               endContent={!creatingFolder && <ArrowRight className="h-4 w-4" />}
+              className="rounded-full shadow-md hover:shadow-lg transition-all duration-200"
             >
               Create
             </Button>

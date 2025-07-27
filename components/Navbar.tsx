@@ -129,27 +129,27 @@ export default function Navbar({ user }: NavbarProps) {
 
   return (
     <header
-      className={`bg-default-50 border-b border-default-200 sticky top-0 z-50 transition-shadow ${isScrolled ? "shadow-sm" : ""}`}
+      className={`bg-white sticky top-0 z-50 transition-shadow ${isScrolled ? "shadow-md" : "shadow-none"} rounded-b-xl`}
     >
-      <div className="container mx-auto py-3 md:py-4 px-4 md:px-6">
-        <div className="flex justify-between items-center">
+      <div className="container mx-auto py-4 md:py-5 px-4 md:px-8 flex items-center justify-between">
+        <div className="flex justify-between items-center w-full">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 z-10">
-            <CloudUpload className="h-6 w-6 text-primary" />
-            <h1 className="text-xl font-bold">Droply</h1>
+          <Link href="/" className="flex items-center gap-3 z-10 group">
+            <CloudUpload className="h-7 w-7 text-blue-600 group-hover:scale-110 transition-transform duration-200" />
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 group-hover:text-blue-700 transition-colors duration-200">Droply</h1>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex gap-4 items-center">
+          <div className="hidden md:flex gap-6 items-center">
             {/* Show these buttons when user is signed out */}
             <SignedOut>
               <Link href="/sign-in">
-                <Button variant="flat" color="primary">
+                <Button variant="flat" color="primary" rounded-full transition-all duration-200 shadow-sm hover:shadow-md>
                   Sign In
                 </Button>
               </Link>
               <Link href="/sign-up">
-                <Button variant="solid" color="primary">
+                <Button variant="solid" color="primary" rounded-full transition-all duration-200 shadow-sm hover:shadow-md>
                   Sign Up
                 </Button>
               </Link>
@@ -160,7 +160,7 @@ export default function Navbar({ user }: NavbarProps) {
               <div className="flex items-center gap-4">
                 {!isOnDashboard && (
                   <Link href="/dashboard">
-                    <Button variant="flat" color="primary">
+                    <Button variant="flat" color="primary" rounded-full transition-all duration-200 shadow-sm hover:shadow-md>
                       Dashboard
                     </Button>
                   </Link>
@@ -169,7 +169,7 @@ export default function Navbar({ user }: NavbarProps) {
                   <DropdownTrigger>
                     <Button
                       variant="flat"
-                      className="p-0 bg-transparent min-w-0"
+                      className="p-0 bg-transparent min-w-0 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
                       endContent={<ChevronDown className="h-4 w-4 ml-2" />}
                     >
                       <div className="flex items-center gap-2">
@@ -228,7 +228,7 @@ export default function Navbar({ user }: NavbarProps) {
               />
             </SignedIn>
             <button
-              className="z-50 p-2"
+              className="z-50 p-2 rounded-full transition-all duration-200 shadow-sm hover:shadow-md"
               onClick={toggleMobileMenu}
               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               data-menu-button="true"
@@ -253,7 +253,7 @@ export default function Navbar({ user }: NavbarProps) {
           {/* Mobile Menu */}
           <div
             ref={mobileMenuRef}
-            className={`fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-default-50 z-40 flex flex-col pt-20 px-6 shadow-xl transition-transform duration-300 ease-in-out ${
+            className={`fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-white z-40 flex flex-col pt-20 px-8 shadow-2xl transition-transform duration-300 ease-in-out rounded-l-2xl border-l border-gray-200 ${
               isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
             } md:hidden`}
           >
@@ -264,7 +264,7 @@ export default function Navbar({ user }: NavbarProps) {
                   className="w-full"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Button variant="flat" color="primary" className="w-full">
+                  <Button variant="flat" color="primary" className="w-full rounded-full transition-all duration-200 shadow-sm hover:shadow-md">
                     Sign In
                   </Button>
                 </Link>
@@ -273,7 +273,7 @@ export default function Navbar({ user }: NavbarProps) {
                   className="w-full"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Button variant="solid" color="primary" className="w-full">
+                  <Button variant="solid" color="primary" className="w-full rounded-full transition-all duration-200 shadow-sm hover:shadow-md">
                     Sign Up
                   </Button>
                 </Link>
