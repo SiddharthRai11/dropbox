@@ -21,6 +21,10 @@ import {
 } from "lucide-react";
 import { signUpSchema } from "@/schemas/signUpSchema";
 
+type ClerkAPIError = {
+  errors?: { message: string }[];
+};
+
 export default function SignUpForm() {
   const router = useRouter();
   const { signUp, isLoaded, setActive } = useSignUp();
@@ -28,9 +32,7 @@ export default function SignUpForm() {
   const [authError, setAuthError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [verificationCode, setVerificationCode] = useState("");
-  const [verificationError, setVerificationError] = useState<string | null>(
-    null
-  );
+  const [verificationError, setVerificationError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -60,21 +62,20 @@ export default function SignUpForm() {
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      setVerifying(true);//Very Important State ....Used to switch from SignUp to OTP section....
-    } catch (error: any) {
+      setVerifying(true);
+    } catch (error) {
+      const message =
+        isClerkError(error) && error.errors?.[0]?.message
+          ? error.errors[0].message
+          : "An error occurred during sign-up. Please try again.";
       console.error("Sign-up error:", error);
-      setAuthError(
-        error.errors?.[0]?.message ||
-          "An error occurred during sign-up. Please try again."
-      );
+      setAuthError(message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleVerificationSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleVerificationSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!isLoaded || !signUp) return;
 
@@ -91,37 +92,31 @@ export default function SignUpForm() {
         router.push("/dashboard");
       } else {
         console.error("Verification incomplete:", result);
-        setVerificationError(
-          "Verification could not be completed. Please try again."
-        );
+        setVerificationError("Verification could not be completed. Please try again.");
       }
-    } catch (error: unknown) {
-        console.error("Verification error:", error);
-
-  let errorMessage = "An error occurred during verification. Please try again.";
-
-  if (
-    typeof error === "object" &&
-    error !== null &&
-    "errors" in error &&
-    Array.isArray((error as any).errors)
-  ) {
-    errorMessage = (error as any).errors?.[0]?.message || errorMessage;
-  }
-
-  setVerificationError(errorMessage);
+    } catch (error) {
+      const message =
+        isClerkError(error) && error.errors?.[0]?.message
+          ? error.errors[0].message
+          : "An error occurred during verification. Please try again.";
+      console.error("Verification error:", error);
+      setVerificationError(message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  if (verifying) {//If true you are guided to the OTP section
+  const isClerkError = (error: unknown): error is ClerkAPIError =>
+    typeof error === "object" &&
+    error !== null &&
+    "errors" in error &&
+    Array.isArray((error as ClerkAPIError).errors);
+
+  if (verifying) {
     return (
       <Card className="w-full max-w-md border border-default-200 bg-default-50 shadow-xl">
         <CardHeader className="flex flex-col gap-1 items-center pb-2">
-          <h1 className="text-2xl font-bold text-default-900">
-            Verify Your Email
-          </h1>
+          <h1 className="text-2xl font-bold text-default-900">Verify Your Email</h1>
           <p className="text-default-500 text-center">
             We have sent a verification code to your email
           </p>
@@ -139,10 +134,7 @@ export default function SignUpForm() {
 
           <form onSubmit={handleVerificationSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label
-                htmlFor="verificationCode"
-                className="text-sm font-medium text-default-900"
-              >
+              <label htmlFor="verificationCode" className="text-sm font-medium text-default-900">
                 Verification Code
               </label>
               <Input
@@ -156,28 +148,22 @@ export default function SignUpForm() {
               />
             </div>
 
-            <Button
-              type="submit"
-              color="primary"
-              className="w-full"
-              isLoading={isSubmitting}
-            >
+            <Button type="submit" color="primary" className="w-full" isLoading={isSubmitting}>
               {isSubmitting ? "Verifying..." : "Verify Email"}
             </Button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-default-500">
-              Did not receive a code?{" "}
+              Didn&apos;t receive a code?{" "}
               <button
                 onClick={async () => {
                   if (signUp) {
-                    await signUp.prepareEmailAddressVerification({
-                      strategy: "email_code",
-                    });
+                    await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
                   }
                 }}
-                className="text-primary hover:underline font-medium"
+                disabled={isSubmitting}
+                className="text-primary hover:underline font-medium disabled:opacity-50"
               >
                 Resend code
               </button>
@@ -191,9 +177,7 @@ export default function SignUpForm() {
   return (
     <Card className="w-full max-w-md border border-default-200 bg-default-50 shadow-xl">
       <CardHeader className="flex flex-col gap-1 items-center pb-2">
-        <h1 className="text-2xl font-bold text-default-900">
-          Create Your Account
-        </h1>
+        <h1 className="text-2xl font-bold text-default-900">Create Your Account</h1>
         <p className="text-default-500 text-center">
           Sign up to start managing your images securely
         </p>
@@ -211,10 +195,7 @@ export default function SignUpForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
-            <label
-              htmlFor="email"
-              className="text-sm font-medium text-default-900"
-            >
+            <label htmlFor="email" className="text-sm font-medium text-default-900">
               Email
             </label>
             <Input
@@ -230,10 +211,7 @@ export default function SignUpForm() {
           </div>
 
           <div className="space-y-2">
-            <label
-              htmlFor="password"
-              className="text-sm font-medium text-default-900"
-            >
+            <label htmlFor="password" className="text-sm font-medium text-default-900">
               Password
             </label>
             <Input
@@ -264,10 +242,7 @@ export default function SignUpForm() {
           </div>
 
           <div className="space-y-2">
-            <label
-              htmlFor="passwordConfirmation"
-              className="text-sm font-medium text-default-900"
-            >
+            <label htmlFor="passwordConfirmation" className="text-sm font-medium text-default-900">
               Confirm Password
             </label>
             <Input
@@ -301,18 +276,12 @@ export default function SignUpForm() {
             <div className="flex items-start gap-2">
               <CheckCircle className="h-5 w-5 text-primary mt-0.5" />
               <p className="text-sm text-default-600">
-                By signing up, you agree to our Terms of Service and Privacy
-                Policy
+                By signing up, you agree to our Terms of Service and Privacy Policy
               </p>
             </div>
           </div>
 
-          <Button
-            type="submit"
-            color="primary"
-            className="w-full"
-            isLoading={isSubmitting}
-          >
+          <Button type="submit" color="primary" className="w-full" isLoading={isSubmitting}>
             {isSubmitting ? "Creating account..." : "Create Account"}
           </Button>
         </form>
@@ -323,10 +292,7 @@ export default function SignUpForm() {
       <CardFooter className="flex justify-center py-4">
         <p className="text-sm text-default-600">
           Already have an account?{" "}
-          <Link
-            href="/sign-in"
-            className="text-primary hover:underline font-medium"
-          >
+          <Link href="/sign-in" className="text-primary hover:underline font-medium">
             Sign in
           </Link>
         </p>
